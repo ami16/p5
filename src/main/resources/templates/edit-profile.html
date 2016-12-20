@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+<head th:include="commons :: headerFragment"></head>
+<body>
+
+	<div class="ss-form-container">
+		<div class="ss-header-image-container">
+			<div class="ss-header-image-image">
+				<div class="ss-header-image-sizer"></div>
+			</div>
+		</div>
+		<div class="ss-top-of-page">
+			<div class="ss-logout">
+				<a th:href="@{/logout}">Logout</a>
+			</div>
+			<div class="ss-my-profile">
+				<a href="#" th:href="@{/user-profile/{id}(id=${session.login})}">My profile</a>
+				<a href="#" th:href="@{/user-profile/edit}">&nbsp;(edit)</a>
+			</div>
+			<div>
+				<h1 class="ss-form-title" dir="ltr">
+					<a href="/users" th:href="@{/users}"> &#x2190;</a> 
+					<span th:if="${session.login == user.login}" th:text="@{'Edit your profile'}"></span>
+					<span th:if="${monthsAtChegg != null}" th:class="work-duration" th:inline="text">You've been [[${monthsAtChegg}]] months with Chegg</span>
+				</h1>
+
+				<div class="n-profile-bar">
+					<div class="userpic">
+						<img th:if="${user.profilePicturePath != null}" th:src="${user.profilePicturePath}" />
+						<img th:if="${user.profilePicturePath == null}" th:src="@{img/default.jpg}" />
+					</div>
+					<div class="name">
+						<h3 th:text="${user.name}">Valentyn Hontovyy</h3>
+						<p th:text="${user.email}">vhontovyy@chegg.com</p>
+					</div>
+					<div class="about">
+						<form method="POST" enctype="multipart/form-data"
+							th:action="@{/user-profile/upload.do}">
+							<span>Upload photo:</span><br /> 
+							<input type="file"	name="file" /> 
+							<input type="hidden" name="login" th:field="${user.login}" /> 
+							<input type="submit" value="Go" />
+						</form>
+					</div>
+				</div>
+
+				<div class="n-profile-details">
+				<form action="#" id="save-user-form" role="form"
+					th:action="@{/user-profile/save}" method="post">
+					
+					<div class="form-details">Full name: <br /><input type="text" th:field="${user.name}" size="25"/></div>
+					<div class="form-details">Title/office: <br /><input type="text" th:field="${user.title}" size="25"/>
+						<select th:field="${user.office}" style="width: 80px;">
+							<option th:value="${user.office != null} ? ${user.office}">Office</option>
+							<option value="UA">UA Lviv</option>
+							<option value="US">UA K-City</option>
+							<option value="US">US Santa Clara</option>
+							<option value="US">US San Francisco</option>
+							<option value="US">US other</option>
+							<option value="CN">China</option>
+							<option value="IN">India</option>
+							<option value="IS">Israel</option>
+							<option value="NA">Other</option>
+						</select></div>
+					<div class="form-details">With Chegg since: <input type="date" th:field="${user.cheggJoinDate}" style="width:140px;"/></div>
+					<div class="form-details">Personal Quote:<br /><textarea name="quote" form="save-user-form" th:field="${user.quote}" rows="3" cols="37"></textarea></div>
+					<div class="form-details">Technologies (coma separated):<br /><textarea name="techStack" form="save-user-form" th:field="${user.techStack}" rows="3" cols="37"></textarea></div>
+					<div class="form-details">Interests (coma separated):<br /><textarea name="interests" form="save-user-form" th:field="${user.interests}" rows="3" cols="37"></textarea></div>
+					<table style="width: 100%">
+						<tbody>
+							<tr>
+								<td style="width: 25%">Facebook:</td>
+								<td style="width: 75%"><input type="text" th:field="${socialNetworks.facebook}" size="26"/></td>
+							</tr>
+							<tr>
+								<td style="width: 25%">Twitter:</td>
+								<td style="width: 75%"><input type="text" th:field="${socialNetworks.twitter}" size="26"/></td>
+							</tr>
+							<tr>
+								<td style="width: 25%">Instagram:</td>
+								<td style="width: 75%"><input type="text" th:field="${socialNetworks.instagram}" size="26"/></td>
+							</tr>
+							<tr>
+								<td style="width: 25%">LinkedIn:</td>
+								<td style="width: 75%"><input type="text" th:field="${socialNetworks.linkedin}" size="26"/></td>
+							</tr>							
+						</tbody>
+					</table>
+					<input type="hidden" th:field="${user.login}"/>
+					<button type="submit">Save</button>
+				</form>
+				</div>
+				<div class="ss-footer">(c) Wild Groundhogs 2015</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
