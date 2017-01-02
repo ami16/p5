@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+<head th:include="commons :: headerFragment"></head>
+<body>
+
+	<div class="ss-form-container">
+		<div class="ss-header-image-container">
+			<div class="ss-header-image-image">
+				<div class="ss-header-image-sizer"></div>
+			</div>
+		</div>
+		<div class="ss-top-of-page">
+			<div class="ss-logout">
+				<a th:href="@{/logout}">Logout</a>
+			</div>
+			<div class="ss-my-profile">
+				<a href="#" th:href="@{/user-profile/{id}(id=${session.login})}">My
+					profile</a> <a href="#" th:href="@{/user-profile/edit}">&nbsp;(edit)</a>
+			</div>
+			<div>
+				<h1 class="ss-form-title" dir="ltr">&nbsp;</h1>
+				<div th:text="${message}"></div>
+				<!-- All profiles -->
+				<div class="profiles">
+					<div class="wrap" th:each="userWrapper : ${userWrapperList}">
+						<div class="left_col">
+							<div th:class="userpic">
+								<a th:href="@{/user-profile/{id}(id=${userWrapper.user.login})}"> <img
+									th:if="${userWrapper.user.profilePicturePath != null}"
+									th:src="${userWrapper.user.profilePicturePath}" />
+									<img
+									th:if="${userWrapper.user.profilePicturePath == null}"
+									th:src="@{/img/default.jpg}" />
+								</a>
+								<div>
+									<h4>
+										<a	th:href="@{/user-profile/{id}(id=${userWrapper.user.login})}"
+											th:text="${userWrapper.user.name}">User Name</a>
+									</h4>
+									<h5 th:text="${userWrapper.user.title}">Title</h5>
+								</div>
+							</div>
+						</div>
+						<div class="mid_col">
+							<ul class="users-icons">
+								<li>
+									<div th:if="${userWrapper.office != null}" th:switch="${userWrapper.office}">
+									<a th:href="@{/search/user/office/{value}(value=${userWrapper.office})}" th:alt-title="${'Office: '+ userWrapper.office}">
+									<span th:case="'UA'"><img
+										th:src="@{/img/country-ua.jpg}" /></span>
+									<span th:case="'US'"><img
+										th:src="@{/img/country-usa.png}" /></span>
+									<span th:case="'IS'"><img
+										th:src="@{/img/country-israel.png}" /></span>
+									<span th:case="'IN'"><img
+										th:src="@{/img/country-india.png}" /></span>
+									<span th:case="'NA'"><img
+										th:src="@{/img/country-unknown.jpg}" /></span>
+									<span th:case="*"><img
+										th:src="@{/img/country-unknown.jpg}" /></span>
+									</a>
+									</div>
+								</li>
+								<li><span><a th:if="${userWrapper.socialNetworks != null and userWrapper.socialNetworks.facebook != null and not userWrapper.socialNetworks.facebook.isEmpty()}" th:href="${userWrapper.socialNetworks.facebook}"><img th:src="@{/img/facebook-icon.png}" /></a></span></li>
+								<li><span><a th:if="${userWrapper.socialNetworks != null and userWrapper.socialNetworks.twitter != null and not userWrapper.socialNetworks.twitter.isEmpty()}" th:href="${userWrapper.socialNetworks.twitter}"><img th:src="@{/img/twitter-icon.png}" /></a></span></li>
+								<li><span><a th:if="${userWrapper.socialNetworks != null and userWrapper.socialNetworks.instagram != null and not userWrapper.socialNetworks.instagram.isEmpty()}" th:href="${userWrapper.socialNetworks.instagram}"><img th:src="@{/img/instagram-icon.png}" /></a></span></li>
+								<li><span><a th:if="${userWrapper.socialNetworks != null and userWrapper.socialNetworks.linkedin != null and not userWrapper.socialNetworks.linkedin.isEmpty()}" th:href="${userWrapper.socialNetworks.linkedin}"><img th:src="@{/img/linkedin-icon.png}" /></a></span></li>
+							</ul>
+						</div>
+						<div class="right_col">
+
+							<blockquote class="classic" th:if="${userWrapper.user.quote != null}">
+								<span th:text="${userWrapper.user.quote}">This is my quote</span>
+							</blockquote>
+
+							<span th:if="${userWrapper.interests != null}" th:text="Interests">Interests</span>
+							<ul class="user-interests">
+								<li th:if="${userWrapper.interests != null}" th:each="interest : ${userWrapper.interests}">
+								<a th:href="@{/search/user/interests/{value}(value=${interest})}"><span th:text="${interest}">motorcycles</span></a></li>
+							</ul>
+							<span th:if="${userWrapper.technologies != null}" th:text="Technologies">Technologies</span>
+							<ul class="user-skills">
+								<li th:if="${userWrapper.technologies != null}" th:each="technology : ${userWrapper.technologies}">
+								<a th:href="@{/search/user/technology/{value}(value=${technology})}"><span th:text="${technology}">java</span></a></li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+				<!-- End of all profiles -->
+
+				<div class="ss-form-desc ss-no-ignore-whitespace" dir="ltr"></div>
+			</div>
+			<div class="ss-footer">(c) Wild Groundhogs 2015</div>
+		</div>
+	</div>
+</body>
+</html>

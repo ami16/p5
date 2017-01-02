@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+<head th:include="commons :: headerFragment"></head>
+<body>
+
+	<div class="ss-form-container">
+		<div class="ss-header-image-container">
+			<div class="ss-header-image-image">
+				<div class="ss-header-image-sizer"></div>
+			</div>
+		</div>
+		<div class="ss-top-of-page">
+			<div class="ss-logout">
+				<a th:href="@{/logout}">Logout</a>
+			</div>
+			<div class="ss-my-profile">
+				<a href="#" th:href="@{/user-profile/{id}(id=${session.login})}">My profile</a>
+				<a href="#" th:href="@{/user-profile/edit}">&nbsp;(edit)</a>
+			</div>
+			<div>
+				<h1 class="ss-form-title" dir="ltr">
+					<a href="/users" th:href="@{/users}"> &#x2190;</a> 
+					<span th:if="${session.login == user.login}" th:text="@{'Your Profile'}"></span>
+					<span th:if="${session.login != user.login}" th:inline="text">[[${name}]]&#39; Profile</span>
+					<span th:if="${monthsAtChegg != null}" th:class="work-duration" th:inline="text">[[${monthsAtChegg}]] months with Chegg</span> 
+				</h1>
+
+				<div class="n-profile-bar">
+					<div class="userpic">
+						<img th:if="${user.profilePicturePath != null}" th:src="${user.profilePicturePath}" />
+						<img th:if="${user.profilePicturePath == null}" th:src="@{/img/default.jpg}" />
+					</div>
+					<div class="name">
+						<h3 th:text="${user.name}">Valentyn Hontovyy</h3>
+						<p th:text="${user.email}">vhontovyy@chegg.com</p>
+					</div>
+					<div class="about">
+						<div class="my">
+							<div th:switch="${office}">
+							<a th:href="@{/search/user/office/{value}(value=${office})}" th:alt-title="${'Office: '+ office}">
+								<span th:case="'UA'"><img
+									th:src="@{/img/country-ua.jpg}" /></span>
+								<span th:case="'US'"><img
+									th:src="@{/img/country-usa.png}" /></span>
+								<span th:case="'IS'"><img
+									th:src="@{/img/country-israel.png}" /></span>
+								<span th:case="'IN'"><img
+									th:src="@{/img/country-india.png}" /></span>
+								<span th:case="'NA'"><img
+									th:src="@{/img/country-unknown.jpg}" /></span>
+								<span th:case="*"><img
+									th:src="@{/img/country-unknown.jpg}" /></span>
+							</a>
+							</div>
+							<p>Based in</p>
+							<p class="link" th:text="${office}">Lviv, Ukraine</p>
+						</div>
+						<div class="job">
+							<img
+								th:src="@{/img/chegg-logo.png}" />
+							<p class="link" th:text="${user.title}">Java Developer</p>
+						</div>
+					</div>
+					<div class="n-contact" th:object="${socialNetworks}">
+						<ul>
+							<li th:if="*{facebook != null and not facebook.isEmpty()}" th:class="fb"><a href="#" th:href="*{facebook}">Facebook</a></li>
+							<li th:if="*{twitter != null and not twitter.isEmpty()}" th:class="twitter"><a href="#" th:href="*{twitter}">Twitter</a></li>
+							<li th:if="*{instagram != null and not instagram.isEmpty()}" th:class="instagram"><a href="#" th:href="*{instagram }">Instagram</a></li>
+							<li th:if="*{linkedin != null and not linkedin.isEmpty()}" th:class="linkedin"><a href="#" th:href="*{linkedin}">LinkedIn</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="n-profile-details">
+					<blockquote th:if="${user.quote != null}" class="classic">
+						<span th:text="${user.quote}">This is my quote</span>
+					</blockquote>
+
+					<span th:if="${interests != null and not interests.isEmpty()}" th:text="Interests">Interests</span>
+					<ul class="user-interests">
+						<li th:each="interest : ${interests}"><a th:href="@{/search/user/interests/{value}(value=${interest})}"><span th:text="${interest}">motorcycles</span></a></li>
+					</ul>
+					<span th:if="${technologies != null and not technologies.isEmpty()}" th:text="Technologies">Technologies</span>
+					<ul class="user-skills" >
+						<li th:each="technology : ${technologies}"><a th:href="@{/search/user/technology/{value}(value=${technology})}"><span th:text="${technology}">java</span></a></li>
+					</ul>
+
+				</div>
+				<div class="ss-footer">(c) Wild Groundhogs 2015</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

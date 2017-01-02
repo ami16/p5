@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head th:include="commons :: headerFragment"></head>
+<body>
+
+<div class="ss-form-container"><div class="ss-header-image-container"><div class="ss-header-image-image"><div class="ss-header-image-sizer"></div></div></div>
+<div class="ss-top-of-page"><div class="ss-form-heading"><h1 class="ss-form-title" dir="ltr">Cheggbook Registration</h1>
+<div class="ss-form-desc ss-no-ignore-whitespace" dir="ltr">Please register with your @chegg.com email.
+<form name="f" th:action="@{/register}" method="post">
+        <fieldset>
+            <legend>Registration at Cheggbook</legend>
+            <label for="username">Email@chegg.com</label>
+            <input type="text" id="username" name="username"/>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn" formaction="/registration">Register</button>
+            </div>
+        </fieldset>
+    </form>
+</div></div>
+
+<div class="ss-footer">(c) Wild Groundhogs 2015</div></div>
+
+</div></body></html>

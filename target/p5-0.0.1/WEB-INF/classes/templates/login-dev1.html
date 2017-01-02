@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head th:include="commons :: headerFragment"></head>
+<body>
+
+<div class="ss-form-container"><div class="ss-header-image-container"><div class="ss-header-image-image"><div class="ss-header-image-sizer"></div></div></div>
+<div class="ss-top-of-page">
+<div><h1 class="ss-form-title" dir="ltr">Cheggbook Login</h1>
+<div class="ss-form-desc ss-no-ignore-whitespace" dir="ltr">Please log in with you Chegg username (without @chegg.com) and password.
+<form name="f" th:action="@{/login}" method="post">
+        <fieldset>
+            <legend>Please Login</legend>
+            <div th:if="${param.error}" class="alert alert-error">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                You have been logged out.
+            </div>
+            <div th:text="${message}"></div>
+            <label for="username">Login</label>
+            <input type="text" id="username" name="username"/>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn">Log in</button>
+                <a href="/cheggbook/registration">Register account</a>
+                <a href="/cheggbook/registration">Forgot password?</a>
+            </div>
+        </fieldset>
+</form>
+</div>
+</div>
+
+<div class="ss-footer">(c) Wild Groundhogs 2015</div></div>
+
+</div></body></html>
